@@ -1399,16 +1399,171 @@ body {
 }
 
 /* ===================================
+   Hamburger Menu
+   =================================== */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: 2px solid var(--forest-green);
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    z-index: 200;
+    transition: all 0.3s ease;
+}
+
+.hamburger:hover {
+    background-color: rgba(26, 77, 46, 0.05);
+}
+
+.hamburger-line {
+    display: block;
+    width: 22px;
+    height: 2.5px;
+    background-color: var(--forest-green);
+    border-radius: 2px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+}
+
+.hamburger.active {
+    border-color: var(--forest-green-light);
+}
+
+.hamburger.active .hamburger-line:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+}
+
+.hamburger.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger.active .hamburger-line:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+}
+
+.mobile-cta {
+    display: none;
+}
+
+/* ===================================
    Responsive Design
    =================================== */
 @media (max-width: 968px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .desktop-cta {
+        display: none;
+    }
+
+    .mobile-cta {
+        display: block;
+    }
+
     .nav-wrapper {
-        flex-direction: column;
-        gap: 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
     }
 
     .nav-links {
-        gap: 20px;
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: linear-gradient(135deg, #f0f7f2 0%, var(--cream) 50%, #e8f5e9 100%);
+        border-radius: 16px;
+        padding: 28px 24px;
+        gap: 0;
+        margin-top: 12px;
+        box-shadow: 0 8px 32px rgba(26, 77, 46, 0.12),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(26, 77, 46, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .nav-links::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--forest-green-light), var(--gold), var(--forest-green-light));
+        border-radius: 16px 16px 0 0;
+    }
+
+    .nav-links.open {
+        display: flex;
+        animation: menuSlideDown 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .nav-links li {
+        border-bottom: 1px solid rgba(26, 77, 46, 0.08);
+    }
+
+    .nav-links li:last-child {
+        border-bottom: none;
+        margin-top: 8px;
+        padding-top: 8px;
+    }
+
+    .nav-links a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 16px;
+        border-radius: 10px;
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: var(--slate-gray-dark);
+        transition: all 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus {
+        background-color: rgba(26, 77, 46, 0.06);
+        color: var(--forest-green);
+        transform: translateX(4px);
+    }
+
+    .nav-links li:nth-child(1) a::before { content: '\1F3E1'; }
+    .nav-links li:nth-child(2) a::before { content: '\1F331'; }
+    .nav-links li:nth-child(3) a::before { content: '\2B50'; }
+    .nav-links li:nth-child(4) a::before { content: '\1F4DE'; }
+
+    .mobile-cta .btn-primary {
+        display: block;
+        text-align: center;
+        width: 100%;
+        padding: 14px 28px;
+        border-radius: 12px;
+        font-size: 1.05rem;
+        background: linear-gradient(135deg, var(--forest-green), var(--forest-green-dark));
+        box-shadow: 0 4px 16px rgba(26, 77, 46, 0.25);
+    }
+
+    .mobile-cta .btn-primary:hover {
+        box-shadow: 0 6px 20px rgba(26, 77, 46, 0.35);
+    }
+
+    @keyframes menuSlideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-12px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     .hero-headline {
@@ -1478,12 +1633,6 @@ body {
 
     .review-featured blockquote {
         font-size: 1.2rem;
-    }
-
-    .nav-links {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
     }
 
     .gallery-grid {
